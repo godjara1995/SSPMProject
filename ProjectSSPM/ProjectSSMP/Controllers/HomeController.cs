@@ -17,6 +17,7 @@ namespace ProjectSSMP.Controllers
 
         [Authorize]
         
+
         
         public IActionResult Index()
         {

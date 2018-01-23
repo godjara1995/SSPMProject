@@ -17,6 +17,7 @@ namespace ProjectSSMP.Controllers
         
         public IActionResult Login()
         {
+
             return View();
         }
         [HttpPost]
