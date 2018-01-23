@@ -4,18 +4,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjectSSMP.Models;
+using ProjectSSMP.Models.Menu;
 
 namespace ProjectSSMP.Controllers
 {
     public class BaseController : Controller
     {
-        private readonly sspmContext _context;
+        public sspmContext context;
+       
 
-        public BaseController(sspmContext context)
+        public List<GetMenuModelcs>  GetMenu(string UserID)
         {
-            _context = context;
+            var loggedInUser = HttpContext.User;
+            var loggedInUserName = loggedInUser.Identity.Name;
+            var userid = (from u in context.UserSspm where u.Username.Equals(loggedInUserName) select u).FirstOrDefault();
+
+            var userMenu = (from mg in context.MenuGroup
+                            join ma in context.MenuAuthentication on mg.MenuId equals ma.MenuId
+                            join ua in context.UserAssignGroup on ma.GroupId equals ua.GroupId
+                            where ua.UserId.Equals(userid.UserId)
+                            select new GetMenuModelcs
+                            {
+                                MenuId =mg.MenuId,
+                                MenuName = mg.MenuName,
+                                MenuUrl  =  mg.MenuUrl,
+                                MenuIcon = mg.MenuIcon
+                            }).ToList();
+
+            var manuname = (from mg in context.MenuGroup select mg).ToList();
+            return userMenu; ;
         }
-        
 
     }
 }

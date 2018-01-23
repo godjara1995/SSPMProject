@@ -44,6 +44,10 @@ namespace ProjectSSMP.Controllers
         }
         public IActionResult AddUser()
         {
+            var manuname = (from mg in _context.MenuGroup select mg).ToList();
+
+            ViewBag.userMenu = manuname;
+
             return View();
         }
 

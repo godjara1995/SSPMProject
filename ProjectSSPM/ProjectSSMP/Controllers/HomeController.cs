@@ -11,31 +11,31 @@ using Newtonsoft.Json;
 
 namespace ProjectSSMP.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController         
     {
-        private readonly sspmContext _context;
-        
-        public HomeController(sspmContext context)
-        {
-            _context = context;
-        }
+        public HomeController(sspmContext context) => this.context = context;
+
         [Authorize]
+        
+        
         public IActionResult Index()
         {
             var loggedInUser = HttpContext.User;
             var loggedInUserName = loggedInUser.Identity.Name;
-            var userid = (from u in _context.UserSspm where u.Username.Equals(loggedInUserName) select u).FirstOrDefault();
-            
-            var userMenu = (from mg in _context.MenuGroup
-                            join ma in _context.MenuAuthentication on mg.MenuId equals ma.MenuId
-                            join ua in _context.UserAssignGroup on ma.GroupId equals ua.GroupId
-                            where ua.UserId.Equals(userid.UserId)
-                            select new {
-                                 mg.MenuName
-                            }).ToList();
-            var manuname = (from mg in _context.MenuGroup select mg).ToList();
+            var userid = (from u in context.UserSspm where u.Username.Equals(loggedInUserName) select u).FirstOrDefault();
 
-            ViewBag.userMenu = manuname;
+            var userMenu = (from mg in context.MenuGroup
+                            join ma in context.MenuAuthentication on mg.MenuId equals ma.MenuId
+                            join ua in context.UserAssignGroup on ma.GroupId equals ua.GroupId
+                            where ua.UserId.Equals(userid.UserId)
+                            select new
+                            {
+                                mg.MenuName
+                            }).ToList();
+
+            
+
+            ViewBag.userMenu = GetMenu("Charoon");
             
             
             return View();
@@ -43,6 +43,7 @@ namespace ProjectSSMP.Controllers
 
         public IActionResult About()
         {
+            
             ViewData["Message"] = "Your application description page.";
 
             return View();
