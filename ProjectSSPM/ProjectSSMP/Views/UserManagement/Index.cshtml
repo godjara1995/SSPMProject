@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectSSMP.Models.UserSspm>
+﻿@model IEnumerable<ProjectSSMP.Models.UserManagenent.IndexUserModel>
 
 @{
     ViewData["Title"] = "User Management";
@@ -22,14 +22,14 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Username)
+                    Username
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    Status
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.JobResponsible)
+                    JobResponsible
                 </th>
 
                 <th>
@@ -46,23 +46,30 @@
         </tr>
     </thead>
     <tbody>
+        
+        
 @foreach (var item in Model) {
         <tr>
             <td>
+                
                 @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
+              
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.JobResponsible)
+                
+                @Html.DisplayFor(modelItem => item.GroupName)
             </td>
 
             <td>
+                
                 @Html.DisplayFor(modelItem => item.UserEditBy)
             </td>
             <td>
+                
                 @Html.DisplayFor(modelItem => item.UserEditDate)
             </td>
             

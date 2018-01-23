@@ -16,13 +16,47 @@ namespace ProjectSSMP.Controllers
     {
         public UserManagementController(sspmContext context) => this.context = context;
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewBag.userMenu = GetMenu();
-            /* var innerjoin =  from x in context.UserSspm
+            List<IndexUserModel> model = new List<IndexUserModel>();
+
+            var indexUserModel = (from x in context.UserSspm
+                                  join x2 in context.UserAssignGroup on x.UserId equals x2.UserId
+                                  join x3 in context.UserGroup on x2.GroupId equals x3.GroupId
+                                  select new
+                                  {
+                                      UserId = x.UserId,
+                                      Username = x.Username,
+                                      Status = x.Status,
+                                      UserEditBy = x.UserEditBy,
+                                      UserEditDate = x.UserEditDate,
+                                      GroupName = x3.GroupName
+                                  }).ToList();
+            foreach(var itme in indexUserModel)
+            {
+                model.Add(new IndexUserModel()
+                {
+                    UserId = itme.UserId,
+                    Username = itme.Username,
+                    Status = itme.Status,
+                    UserEditBy= itme.UserEditBy,
+                    UserEditDate = itme.UserEditDate,
+                    GroupName = itme.GroupName
+
+
+                });
+            }
+
+            return View(model);
+
+        }
+        public List<IndexUserModel> indexuser()
+        {
+            var innerjoin =  from x in context.UserSspm
                                    join x2 in context.UserAssignGroup on x.UserId equals x2.UserId
                                    join x3 in context.UserGroup on x2.GroupId equals x3.GroupId
-                                                select new IndexUserModel
+                                   select new IndexUserModel
                                    {
                                        UserId = x.UserId,
                                          Username = x.Username,
@@ -31,10 +65,12 @@ namespace ProjectSSMP.Controllers
                                          UserEditDate = x.UserEditDate,
                                          GroupName = x3.GroupName
 
-                                   };*/
-            return View(await context.UserSspm.ToListAsync());
+                                   };
 
+
+            return innerjoin.ToList();
         }
+
         public IActionResult AddUser()
         {
 

@@ -1,13 +1,18 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    var userMenu = ViewBag.userMenu;
+    foreach (var data in userMenu)
+    {
+        <li>
+            <a href="/UserManagement/">
+                <i class="@data.MenuIcon"></i>
+                <span class="nav-text">
+                    @data.MenuName
+                    <br />
+                </span>
+            </a>
+        </li>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-</head>
-<body>
-    <div>
-        @RenderBody()
-    </div>
-</body>
-</html>
+    }
+
+}

@@ -31,7 +31,7 @@ namespace ProjectSSMP.Controllers
                                 MenuIcon = mg.MenuIcon
                             }).ToList();
 
-            var manuname = (from mg in context.MenuGroup select mg).ToList();
+            
             return userMenu; ;
         }
 

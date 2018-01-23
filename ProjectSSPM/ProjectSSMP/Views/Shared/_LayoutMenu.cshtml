@@ -22,26 +22,9 @@
 <body>
     <div class="area"></div><nav class="main-menu">
         <ul>
-
+            @Html.Partial("~/Views/Shared/MenuPage.cshtml")
             
-                @{ 
-                    var userMenu = ViewBag.userMenu;
-                    foreach (var data in userMenu)
-                    {
-                        <li>
-                            <a href="/UserManagement/">
-                            <i class="@data.MenuIcon"></i>
-                                <span class="nav-text">
-                                @data.MenuName
-
-                                </span>
-                            </a>
-                          </li>
-
-                    }
-
-                }
-
+            
 
 
             @*<li>
