@@ -1,0 +1,91 @@
+﻿@model ProjectSSMP.Models.UserManagenent.DetailUserInputModel
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Views/Shared/_LayoutMenu.cshtml";
+}
+
+<h2 class="well">User Details</h2>
+
+<div class="col-lg-12 well">
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Firstname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobResponsible)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobResponsible)
+        </dd>
+
+        <br>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCreateBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserCreateBy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCreateDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserCreateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserEditBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserEditBy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserEditDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserEditDate)
+        </dd>
+
+
+
+   </dl>
+        <div class= "text-right" style="margin-right: 10px;">
+            <a asp-action="Edit" class="btn btn-warning btn-sm" asp-route-id="@Model.UserId">Edit</a>
+            <a asp-action="Index" class="btn btn-danger btn-sm">Back to List</a>
+        </div>
+</div>

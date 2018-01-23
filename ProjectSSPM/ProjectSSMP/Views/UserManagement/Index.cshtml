@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ProjectSSMP.Models.UserSspm>
+
+@{
+    ViewData["Title"] = "User Management";
+    Layout = "~/Views/Shared/_LayoutMenu.cshtml";
+}
+
+<div class="container">
+    <h2 class="well">User Management</h2>
+
+
+    <!--
+<div class="text-right">
+        <a asp-action="AddUser" class="btn btn-info" align="right">Add User</a>
+
+        </div>
+        <button type="button" asp-action="AddUser"  class="btn btn-primary btn-sm">Add User</button>
+    -->
+
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.JobResponsible)
+                </th>
+
+                <th>
+                    Edit By
+                </th>
+                <th>
+                    Last Edited
+                </th>
+                 <th>
+                    
+                        <a asp-action="AddUser" class="btn btn-primary btn-md" style="margin-left: 15px;">Add User</a> 
+                   
+                </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.JobResponsible)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UserEditBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserEditDate)
+            </td>
+            
+            <td>
+                <a asp-action="Edit" class="btn btn-warning btn-sm" asp-route-id="@item.UserId">Edit</a> 
+                <a asp-action="Details" class="btn btn-info btn-sm" asp-route-id="@item.UserId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+
+</table>
+</div>

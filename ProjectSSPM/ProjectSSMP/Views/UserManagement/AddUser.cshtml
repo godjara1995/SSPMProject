@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Add User";
+    Layout = "~/Views/Shared/_LayoutMenu.cshtml";
+}
+
+<div class="container">
+    <h2 class="well">Add User</h2>
+    <div class="col-lg-12 well">
+    <div class="row">
+                <form asp-controller="UserManagement" asp-action="AddUser" method="post">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Username</label>
+                                <input type="text" name="Username" id="Username" placeholder="Enter Username Here.." class="form-control">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Password</label>
+                                <input type="text" name="Password" id="Password" placeholder="Enter Password Here.." class="form-control">
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>First Name</label>
+                                <input type="text" name="Firstname" id="Firstname" placeholder="Enter First Name Here.." class="form-control">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="Lastname" id="Lastname" placeholder="Enter Last Name Here.." class="form-control">
+                            </div>
+                        </div>                  
+                         
+                        
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Job Title</label>
+                                <input type="text" name="JobResponsible" id="JobResponsible" placeholder="Enter Designation Here.." class="form-control">
+                            </div>      
+                            <div class="col-sm-6 form-sgroup">
+                                <label>Group</label>
+                                <div class="form-group">
+                                             <select class="form-control" name="GroupID" id="GroupID" >
+                                             <option value="50">Project Manager</option>
+                                             <option value="10">Team</option>
+                                             </select>
+                                        </div>
+                            </div>  
+                        </div>                      
+                    <div class= "text-right" style="margin-right: 10px;">
+                        <a asp-action="Index" class="btn btn-danger" >Back</a>
+                        <button type="submit" class="btn btn-primary">Submit</button> 
+                    </div> 
+                
+                    </div>
+                </form> 
+                </div>
+    </div>
+    </div>
