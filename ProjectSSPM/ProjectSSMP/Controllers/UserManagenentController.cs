@@ -33,16 +33,28 @@ namespace ProjectSSMP.Controllers
                                       UserEditDate = x.UserEditDate,
                                       GroupName = x3.GroupName
                                   }).ToList();
+            
             foreach(var itme in indexUserModel)
             {
+                var check ="";
+                if (itme.Status == "A")
+                {
+                    check = "Active";
+                }
+                else
+                {
+                    check = "DeActived";
+                }
+
                 model.Add(new IndexUserModel()
                 {
                     UserId = itme.UserId,
                     Username = itme.Username,
-                    Status = itme.Status,
+                    Status = check,
                     UserEditBy= itme.UserEditBy,
                     UserEditDate = itme.UserEditDate,
-                    GroupName = itme.GroupName
+                    GroupName = itme.GroupName,
+                   
 
 
                 });
@@ -51,25 +63,7 @@ namespace ProjectSSMP.Controllers
             return View(model);
 
         }
-        public List<IndexUserModel> indexuser()
-        {
-            var innerjoin =  from x in context.UserSspm
-                                   join x2 in context.UserAssignGroup on x.UserId equals x2.UserId
-                                   join x3 in context.UserGroup on x2.GroupId equals x3.GroupId
-                                   select new IndexUserModel
-                                   {
-                                       UserId = x.UserId,
-                                         Username = x.Username,
-                                         Status = x.Status,
-                                         UserEditBy = x.UserEditBy,
-                                         UserEditDate = x.UserEditDate,
-                                         GroupName = x3.GroupName
 
-                                   };
-
-
-            return innerjoin.ToList();
-        }
 
         public IActionResult AddUser()
         {
@@ -290,7 +284,15 @@ namespace ProjectSSMP.Controllers
             var userAssign = await context.UserAssignGroup.SingleOrDefaultAsync(m => m.UserId == id);
 
             var groupname = (from u in context.UserGroup where u.GroupId.Equals(userAssign.GroupId) select u).FirstOrDefault();
-
+            var check = "";
+            if (userSspm.Status == "A")
+            {
+                check = "Active";
+            }
+            else
+            {
+                check = "DeActived";
+            }
             var e = new DetailUserInputModel()
             {
                 UserId = userSspm.UserId,
@@ -299,7 +301,7 @@ namespace ProjectSSMP.Controllers
                 Firstname = userSspm.Firstname,
                 Lastname = userSspm.Lastname,
                 JobResponsible = userSspm.JobResponsible,
-                Status = userSspm.Status,
+                Status = check,
                 GroupId = userAssign.GroupId,
                 UserCreateDate = userSspm.UserCreateDate,
                 UserEditDate = userSspm.UserEditDate,
