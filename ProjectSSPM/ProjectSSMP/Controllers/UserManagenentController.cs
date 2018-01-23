@@ -12,23 +12,16 @@ using ProjectSSMP.Models.UserManagenent;
 
 namespace ProjectSSMP.Controllers
 {
-    public class UserManagementController : Controller
+    public class UserManagementController : BaseController
     {
-        private readonly sspmContext _context;
-
-        public UserManagementController(sspmContext context)
-        {
-            _context = context;
-        }
+        public UserManagementController(sspmContext context) => this.context = context;
 
         public async Task<IActionResult> Index()
         {
-            var manuname = (from mg in _context.MenuGroup select mg).ToList();
-
-            ViewBag.userMenu = manuname;
-            /* var innerjoin =  from x in _context.UserSspm
-                                   join x2 in _context.UserAssignGroup on x.UserId equals x2.UserId
-                                   join x3 in _context.UserGroup on x2.GroupId equals x3.GroupId
+            ViewBag.userMenu = GetMenu();
+            /* var innerjoin =  from x in context.UserSspm
+                                   join x2 in context.UserAssignGroup on x.UserId equals x2.UserId
+                                   join x3 in context.UserGroup on x2.GroupId equals x3.GroupId
                                                 select new IndexUserModel
                                    {
                                        UserId = x.UserId,
@@ -39,14 +32,14 @@ namespace ProjectSSMP.Controllers
                                          GroupName = x3.GroupName
 
                                    };*/
-            return View(await _context.UserSspm.ToListAsync());
+            return View(await context.UserSspm.ToListAsync());
 
         }
         public IActionResult AddUser()
         {
-            var manuname = (from mg in _context.MenuGroup select mg).ToList();
 
-            ViewBag.userMenu = manuname;
+
+            ViewBag.userMenu = GetMenu();
 
             return View();
         }
@@ -55,12 +48,14 @@ namespace ProjectSSMP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddUser(AddUserInputModel inputModel)
         {
+            ViewBag.userMenu = GetMenu();
+
             try
             {
                 var loggedInUser = HttpContext.User;
                 var loggedInUserName = loggedInUser.Identity.Name;
 
-                var id = (from u in _context.RunningNumber where u.Type.Equals("UserID") select u).FirstOrDefault();
+                var id = (from u in context.RunningNumber where u.Type.Equals("UserID") select u).FirstOrDefault();
 
                 int userid;
                 if (id.Number == null)
@@ -96,12 +91,12 @@ namespace ProjectSSMP.Controllers
                 };
 
                 // Add the new object to the Orders collection.
-                _context.UserSspm.Add(ord);
-                await _context.SaveChangesAsync();
-                _context.UserAssignGroup.Add(ord2);
-                await _context.SaveChangesAsync();
+                context.UserSspm.Add(ord);
+                await context.SaveChangesAsync();
+                context.UserAssignGroup.Add(ord2);
+                await context.SaveChangesAsync();
 
-                var query = from num in _context.RunningNumber
+                var query = from num in context.RunningNumber
                                            where num.Type.Equals("UserID") 
                                                 select num;
 
@@ -114,7 +109,7 @@ namespace ProjectSSMP.Controllers
                 // Submit the changes to the database.
                 try
                 {
-                    await _context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                 }
                 catch (Exception e)
                 {
@@ -136,13 +131,15 @@ namespace ProjectSSMP.Controllers
 
         public async Task<IActionResult> Edit(string id)
         {
+            ViewBag.userMenu = GetMenu();
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var userSspm = await _context.UserSspm.SingleOrDefaultAsync(m => m.UserId == id);
-            var userAssign = await _context.UserAssignGroup.SingleOrDefaultAsync(m => m.UserId == id);
+            var userSspm = await context.UserSspm.SingleOrDefaultAsync(m => m.UserId == id);
+            var userAssign = await context.UserAssignGroup.SingleOrDefaultAsync(m => m.UserId == id);
 
             var e = new ShowUserInputModel()
             {
@@ -171,10 +168,12 @@ namespace ProjectSSMP.Controllers
 
         public async Task<IActionResult> Edit(string id, EditUserInputModel editModel)
         {
+            ViewBag.userMenu = GetMenu();
+
             var loggedInUser = HttpContext.User;
             var loggedInUserName = loggedInUser.Identity.Name;
 
-            var query = (from x in _context.UserSspm where x.UserId.Equals(id) select x).FirstOrDefault();
+            var query = (from x in context.UserSspm where x.UserId.Equals(id) select x).FirstOrDefault();
             if (id != query.UserId)
             {
                 return NotFound();
@@ -185,8 +184,8 @@ namespace ProjectSSMP.Controllers
 
                 try
                 {
-                    //_context.Update(ord);
-                    var addquery = from test in _context.UserSspm
+                    //context.Update(ord);
+                    var addquery = from test in context.UserSspm
                                                             where test.UserId.Equals(id)
                                                         select test;
                     foreach (UserSspm UserUpdate in addquery)
@@ -201,10 +200,10 @@ namespace ProjectSSMP.Controllers
                         UserUpdate.Status = editModel.Status;
 
                     }
-                    await _context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     try
                     {
-                        var addquery2 = from test2 in _context.UserAssignGroup
+                        var addquery2 = from test2 in context.UserAssignGroup
                                         where test2.UserId.Equals(id)
                                         select test2;
                         foreach (UserAssignGroup UserUpdate2 in addquery2)
@@ -213,7 +212,7 @@ namespace ProjectSSMP.Controllers
                             UserUpdate2.UserId = id;
 
                         }
-                        await _context.SaveChangesAsync();
+                        await context.SaveChangesAsync();
                     }
                     catch(Exception e)
                     {
@@ -239,20 +238,22 @@ namespace ProjectSSMP.Controllers
 
         private bool UserSspmExists(string id)
         {
-            return _context.UserSspm.Any(e => e.UserId == id);
+            return context.UserSspm.Any(e => e.UserId == id);
         }
 
         public async Task<IActionResult> Details(string id)
         {
+            ViewBag.userMenu = GetMenu();
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var userSspm = await _context.UserSspm.SingleOrDefaultAsync(m => m.UserId == id);
-            var userAssign = await _context.UserAssignGroup.SingleOrDefaultAsync(m => m.UserId == id);
+            var userSspm = await context.UserSspm.SingleOrDefaultAsync(m => m.UserId == id);
+            var userAssign = await context.UserAssignGroup.SingleOrDefaultAsync(m => m.UserId == id);
 
-            var groupname = (from u in _context.UserGroup where u.GroupId.Equals(userAssign.GroupId) select u).FirstOrDefault();
+            var groupname = (from u in context.UserGroup where u.GroupId.Equals(userAssign.GroupId) select u).FirstOrDefault();
 
             var e = new DetailUserInputModel()
             {
