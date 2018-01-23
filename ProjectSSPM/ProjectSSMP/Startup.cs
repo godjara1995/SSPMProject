@@ -29,6 +29,8 @@ namespace ProjectSSMP
                  {
                      options.AccessDeniedPath = new PathString("/Account/Access");
                      options.LoginPath = new PathString("/Security/Login");
+                     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                     
                  });
             services.AddMvc()
                 .AddSessionStateTempDataProvider();
