@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using ProjectSSMP.Models;
+using ProjectSSMP.Models.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using ProjectSSMP.Models;
-using ProjectSSMP.Models.Security;
 
 namespace ProjectSSMP.Controllers
 {
-    public class SecurityController : Controller
+    public class SecurityController : BaseController
     {
-        private readonly sspmContext _context;
+        public SecurityController(sspmContext context) => this.context = context;
 
-        public SecurityController(sspmContext context)
-        {
-            _context = context;
-        }
+        
         public IActionResult Login()
         {
             return View();
@@ -69,7 +66,7 @@ namespace ProjectSSMP.Controllers
         }
         private bool validateuser(string user , string pass)
         {
-            var userid = (from u in _context.UserSspm where u.Username.Equals(user) select u).FirstOrDefault();
+            var userid = (from u in context.UserSspm where u.Username.Equals(user) select u).FirstOrDefault();
             if (userid == null)
             {
                 return false;
@@ -83,7 +80,7 @@ namespace ProjectSSMP.Controllers
         }
         private bool checkstatususer(string user)
         {
-            var userid = (from u in _context.UserSspm where u.Username.Equals(user) select u).FirstOrDefault();
+            var userid = (from u in context.UserSspm where u.Username.Equals(user) select u).FirstOrDefault();
             if(userid.Status == "D")
             {
                 return false;

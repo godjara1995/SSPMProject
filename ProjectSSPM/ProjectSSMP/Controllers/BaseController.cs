@@ -13,7 +13,7 @@ namespace ProjectSSMP.Controllers
         public sspmContext context;
        
 
-        public List<GetMenuModelcs>  GetMenu(string UserID)
+        public List<GetMenuModelcs>  GetMenu()
         {
             var loggedInUser = HttpContext.User;
             var loggedInUserName = loggedInUser.Identity.Name;

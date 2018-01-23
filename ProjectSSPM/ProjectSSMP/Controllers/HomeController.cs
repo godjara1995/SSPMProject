@@ -20,22 +20,9 @@ namespace ProjectSSMP.Controllers
         
         public IActionResult Index()
         {
-            var loggedInUser = HttpContext.User;
-            var loggedInUserName = loggedInUser.Identity.Name;
-            var userid = (from u in context.UserSspm where u.Username.Equals(loggedInUserName) select u).FirstOrDefault();
-
-            var userMenu = (from mg in context.MenuGroup
-                            join ma in context.MenuAuthentication on mg.MenuId equals ma.MenuId
-                            join ua in context.UserAssignGroup on ma.GroupId equals ua.GroupId
-                            where ua.UserId.Equals(userid.UserId)
-                            select new
-                            {
-                                mg.MenuName
-                            }).ToList();
-
             
 
-            ViewBag.userMenu = GetMenu("Charoon");
+            ViewBag.userMenu = GetMenu();
             
             
             return View();
