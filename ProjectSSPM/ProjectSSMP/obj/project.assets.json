@@ -13135,11 +13135,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\Project\\ProjectSSMP\\ProjectSSMP\\ProjectSSMP.csproj",
+      "projectUniqueName": "D:\\GitHub\\SSPMProject\\ProjectSSPM\\ProjectSSMP\\ProjectSSMP.csproj",
       "projectName": "ProjectSSMP",
-      "projectPath": "D:\\Project\\ProjectSSMP\\ProjectSSMP\\ProjectSSMP.csproj",
+      "projectPath": "D:\\GitHub\\SSPMProject\\ProjectSSPM\\ProjectSSMP\\ProjectSSMP.csproj",
       "packagesPath": "C:\\Users\\Ilumi\\.nuget\\packages\\",
-      "outputPath": "D:\\Project\\ProjectSSMP\\ProjectSSMP\\obj\\",
+      "outputPath": "D:\\GitHub\\SSPMProject\\ProjectSSPM\\ProjectSSMP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

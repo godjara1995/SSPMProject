@@ -23,19 +23,22 @@ namespace ProjectSSMP.Controllers
 
         public async Task<IActionResult> Index()
         {
-           /* var innerjoin =  from x in _context.UserSspm
-                                  join x2 in _context.UserAssignGroup on x.UserId equals x2.UserId
-                                  join x3 in _context.UserGroup on x2.GroupId equals x3.GroupId
-                                               select new IndexUserModel
-                                  {
-                                      UserId = x.UserId,
-                                        Username = x.Username,
-                                        Status = x.Status,
-                                        UserEditBy = x.UserEditBy,
-                                        UserEditDate = x.UserEditDate,
-                                        GroupName = x3.GroupName
-                                     
-                                  };*/
+            var manuname = (from mg in _context.MenuGroup select mg).ToList();
+
+            ViewBag.userMenu = manuname;
+            /* var innerjoin =  from x in _context.UserSspm
+                                   join x2 in _context.UserAssignGroup on x.UserId equals x2.UserId
+                                   join x3 in _context.UserGroup on x2.GroupId equals x3.GroupId
+                                                select new IndexUserModel
+                                   {
+                                       UserId = x.UserId,
+                                         Username = x.Username,
+                                         Status = x.Status,
+                                         UserEditBy = x.UserEditBy,
+                                         UserEditDate = x.UserEditDate,
+                                         GroupName = x3.GroupName
+
+                                   };*/
             return View(await _context.UserSspm.ToListAsync());
 
         }
